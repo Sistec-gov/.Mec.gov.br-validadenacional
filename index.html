@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistec - Consulta Nacional de Certificados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #0066cc;
+        }
+        .header {
+            background-color: white;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header img {
+            height: 50px;
+            margin-right: 15px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 20px;
+            color: #0066cc;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .search-box {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        .search-box h2 {
+            color: #0066cc;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .search-box button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .search-box button:hover {
+            background-color: #0055aa;
+        }
+        .result-box {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+            display: none;
+        }
+        .result-box h2 {
+            color: #0066cc;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .result-box p {
+            margin: 10px 0;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #e0e0e0;
+            color: #0066cc;
+            width: 100%;
+        }
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                padding: 10px;
+            }
+            .header img {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="logo.png" alt="Logo Sistec" width="106" height="141">
+        <h1>Sistec - Consulta Nacional de Certificados</h1>
+    </div>
+
+    <div class="container">
+        <div class="search-box">
+            <h2>Validação de Certificado</h2>
+            <p>Digite o CPF para consultar:</p>
+            <input type="text" id="cpfInput" placeholder="000.000.000-00" maxlength="14">
+            <button onclick="consultarCertificado()">Consultar</button>
+        </div>
+
+        <div class="result-box" id="resultBox">
+            <h2>Resultado da Consulta</h2>
+            <p><strong>Nome:</strong> João Batista Izaías</p>
+            <p><strong>CPF:</strong> 043.847.227-61</p>
+            <p><strong>RG:</strong> 086.928.63-7</p>
+            <p><strong>Nível de Ensino:</strong> Superior Completo</p>
+            <p><strong>Instituição:</strong> UNIFATECIE</p>
+            <p><strong>Curso:</strong> Educação Física</p>
+            <p><strong>Data de Conclusão:</strong> 19/04/2023</p>
+            <p><strong>Status:</strong> Válido</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Ministério da Educação - Sistema Nacional de Certificados (Sistec)</p>
+    </div>
+
+    <script>
+        function consultarCertificado() {
+            const cpfInput = document.getElementById('cpfInput').value;
+            const cpfFormatado = cpfInput.replace(/[^\d]/g, '');
+            
+            if (cpfFormatado === "04384722761") {
+                document.getElementById('resultBox').style.display = 'block';
+            } else {
+                alert("CPF não encontrado no sistema. Verifique o número digitado.");
+            }
+        }
+
+        // Máscara para CPF
+        document.getElementById('cpfInput').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 3) value = value.replace(/^(\d{3})/, '$1.');
+            if (value.length > 7) value = value.replace(/^(\d{3}\.\d{3})/, '$1.');
+            if (value.length > 11) value = value.replace(/^(\d{3}\.\d{3}\.\d{3})/, '$1-');
+            e.target.value = value.substring(0, 14);
+        });
+    </script>
+</body>
+</html>
